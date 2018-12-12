@@ -1,0 +1,68 @@
+/*
+    Dev: Frankie Barrios
+    Date: 11 / 29 / 18
+    Purpose: Web Dev Final
+*/
+
+body {
+    background-color: blue;
+    text-align: center;
+    background: linear-gradient(-45deg, #F0F0F0, #f2e6d9);
+    padding: 0;
+}
+
+.shop0 {
+    margin-top: 5em;
+    padding-left: 1em;
+    background-color: white;
+}
+
+.item {
+    text-align: center;
+    margin-bottom: -5em;
+    display: inline-block;
+}
+
+.checkout {
+    padding-top: 7em;
+    padding-bottom: 9em;
+}
+
+.slot {
+    display: inline-block;
+    background-color: lightskyblue;
+    min-width: 20em;
+    min-height: 40em;
+    max-height: 45em;
+}
+
+.container-fluid {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+.padfix {
+    padding: 0;
+}
+
+.btn {
+    box-shadow: 2px 2px 1px #888888;
+}
+
+.panel {
+    box-shadow: 10px 10px 5px #888888;
+}
+
+.table {
+    margin: 0;
+}
+
+.totalBar {
+    font-size: 1.25em;
+    background-color: lightgray;
+}
+
+.row{
+    padding-top: 75px;
+}

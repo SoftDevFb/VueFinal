@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--
+          Dev:      Frankie Barrios
+          Date:     11/29/18
+          Purpose:  Web Dev Final
+      -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jordan Store</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!--Google Materialize-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- <img src="images/jordanBanner.jpg" style="width:100%; height:750px;">
+ -->
+    <!--Allows use of Vue through CDN-->
+    <script src="https://unpkg.com/vue"></script>
+    <div class="container-fluid" id="app">
+        <div class="row shop0">
+            <!--Usage of Bootstrap Grids to get elements inline where I want them-->
+            <div class="col-md-2"></div>
+            <div class="col-md-9">
+                <!--Renders the element multiple times based on my source data-->
+                <!--Pulls from my Vue objects (items)-->
+                <div class="col-md-4 item" v-for="item in items">
+                    <div class="row ">
+                        <div class="col-sm-6 col-md-8 padfix">
+                            <!-- padfix is custom styling, not bootstrap -->
+                            <div class="thumbnail slot" style="box-shadow: 10px 10px 5px lightblue;">
+                                <!--v-bind dynamically binds one or more attributes, or a component prop to an expression.-->
+                                <img src="images/jordan3.jpg" v-bind:src="item.imgPath" alt="..." height="400" width="400">
+                                <div class="caption" style="color: white; font-size: small;">
+                                    <h3>{{item.name}}</h3>
+                                    <p>{{item.description}}</p>
+                                    <!--If no item in cart, cart will be invisible, once item added, cart appears using v-on:click along with v-if -->
+                                    <!--v-if here also works with my function to make the order button disabled once out of stock-->
+                                    <p class="btn btn-success" v-on:click="addItem(item)" v-if="item.qty > 0" id="orderBtn">Order:
+                                        <span><strong>$</strong></span>{{item.amount}} </p> <a href="#" class="btn btn-primary"
+                                        id="avl0">Stock: {{item.qty}}</a></p>
+                                        <!--v-if here changes my button label once out of stock triggered-->
+                                    <p class="btn btn-success" v-if="item.qty <= 0">Out Of Stock</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!--Cart appears if itemsOrdered > 0-->
+<!--Cart structure starts here-->
+        <div class="row checkout" v-if="itemsOrdered > 0">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color: lightgray;"><Strong><span class="glyphicon glyphicon-shopping-cart "
+                                style="font-size: 5em; color:red"></span></strong></div>
+                    <div class="panel-body padfix">
+
+                        <Strong style="font-size: 2em;">In Your Cart</strong>
+
+                        <table class="table">
+                            <tr>
+                                <th>Item</th>
+                                <th>Item Description</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                                <th>Add</th>
+                                <th>Remove</th>
+                            </tr>
+                            <!--Renders the element multiple times based on my source data-->
+                            <!--Pulls from my Vue objects (items)-->
+                            <tr v-for="item in items" v-if="item.numOrdered > 0">
+                                <td class=""><strong>{{item.name}}</strong></td>
+                                <td>{{item.description}}</td>
+                                <!--Button Add Ons add my input next to buttons-->
+                                <td class="input-group-addon"><span><strong>$</strong></span>{{item.amount}}</td>
+                                <td class="input-group-addon">{{item.numOrdered}}</td>
+                                <!--Total calulation-->
+                                <td class="input-group-addon"><span><strong>$</strong></span>{{item.numOrdered *
+                                    item.amount}}</td>
+                                <!--Bootstrap icon (+) linked to addItem()-->
+                                <td class="input-group-addon" v-on:click="addItem(item)"><span class="glyphicon glyphicon-plus"
+                                        style="color: skyblue;  font-size: 1.5em;"></span></td>
+                                <!--Bootstrap icon (-) linked to removeItem()-->
+                                <td class="input-group-addon" v-on:click="removeItem(item)"><span class="glyphicon glyphicon-minus"
+                                        style="color: red; font-size: 1.5em;"></span></td>
+                            </tr>
+                        </table>
+                        <div class="input-group" style="background-color: red;">
+                            <!--Places # of items ordered and grand total in bottom bar of cart table-->
+                            <span class="input-group-addon totalBar"> <strong>Number of Items Ordered: </strong>{{itemsOrdered}}</span>
+                            <span class="input-group-addon totalBar"><strong>Grand Total: ${{total}}</strong></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row checkout">
+            <div class="col-md-2"></div>
+            <div class="col-md-8"></div>
+            <div class="col-md-2"></div>
+        </div>
+
+    </div>
+
+    <script src="main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

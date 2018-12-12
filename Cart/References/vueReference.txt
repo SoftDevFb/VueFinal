@@ -1,0 +1,28 @@
+v-bind:
+Dynamically bind one or more attributes, or a component prop to an expression.
+
+v-for
+Expects: Array | Object | number | string
+
+Usage:
+
+Render the element or template block multiple times based on the source data. The directive’s value must use the special syntax alias in expression to provide an alias for the current element being iterated on:
+
+<div v-for="item in items">
+  {{ item.text }}
+</div>
+Alternatively, you can also specify an alias for the index (or the key if used on an Object):
+
+<div v-for="(item, index) in items"></div>
+<div v-for="(val, key) in object"></div>
+<div v-for="(val, key, index) in object"></div>
+
+The default behavior of v-for will try to patch the elements in-place without moving them. 
+To force it to reorder elements, you need to provide an ordering hint with the key special attribute:
+
+<div v-for="item in items" :key="item.id">
+  {{ item.text }}
+</div>
+When used together with v-if, v-for has a higher priority than v-if. See the list rendering guide for details.
+
+The detailed usage for v-for is explained in the guide section linked below.
